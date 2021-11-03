@@ -64,54 +64,54 @@ k3d-demo-agent-0    Ready    <none>   22s   v1.19.4+k3s1
 Creiamo un Deployment:
 ```
 $ cat >> nginx-deployment.yaml << EOF
-> apiVersion: apps/v1
-> kind: Deployment
-> metadata:
->   name: nginx
->   labels:
->     app: nginx
->   annotations:
->     monitoring: "true"
-> spec:
->   replicas: 1
->   selector:
->     matchLabels:
->       app: nginx
->   template:
->     metadata:
->       labels:
->         app: nginx
->     spec:
->       containers:
->       - image: nginx
->         name: nginx
->         ports:
->         - containerPort: 80
->         resources:
->           limits:
->             memory: "2Gi"
->             cpu: "1000m"
->           requests:
->             memory: "1Gi"
->             cpu: "500m"
-> ---
-> apiVersion: v1
-> kind: Service
-> metadata:
->   labels:
->     app: nginx
->   name: nginx
->   namespace: deployment-demo
-> spec:
->   type: NodePort
->   ports:
->   - nodePort: 30500
->     port: 80
->     protocol: TCP
->     targetPort: 80
->   selector:
->     app: nginx
-> EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30500
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx
+EOF
 ```
 Deployamo nel cluster:
 ```
