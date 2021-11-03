@@ -63,7 +63,7 @@ k3d-demo-agent-0    Ready    <none>   22s   v1.19.4+k3s1
 ```
 Creiamo un Deployment:
 ```
-$ cat >> nginx-deployment.yaml << EOF
+$ cat > nginx-deployment.yaml << 'EOF'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
